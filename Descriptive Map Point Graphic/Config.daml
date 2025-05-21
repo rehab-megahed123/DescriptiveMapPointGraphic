@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArcGIS defaultAssembly="Descriptive Map Point Graphic.dll"
+        defaultNamespace="Descriptive_Map_Point_Graphic"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+
+  <AddInInfo id="{f52d86a4-aeae-4da1-9f1e-94766915bd5a}" version="1.0" desktopVersion="3.3.52636" product="ArcGISPro">
+    <Name>Descriptive_Map_Point_Graphic</Name>   
+    <Description>Descriptive_Map_Point_Graphic description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>Admin</Author>
+    <Company>Acme</Company>
+    <Date>5/21/2025 9:10:53 PM</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+
+  <modules>
+    <insertModule id="Descriptive_Map_Point_Graphic_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="Descriptive_Map_Point_Graphic_Tab1" caption="New Tab">
+          <group refID="Descriptive_Map_Point_Graphic_Group1"/>
+        </tab>-->
+      </tabs>
+              
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="Descriptive_Map_Point_Graphic_Group1" caption="Group 1" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+        </group>
+      </groups>
+      
+      <controls>
+        <!-- add your controls here -->
+      </controls> 
+      
+    </insertModule>
+  </modules>
+</ArcGIS>

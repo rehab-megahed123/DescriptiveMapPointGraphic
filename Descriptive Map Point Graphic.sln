@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Descriptive Map Point Graphic", "Descriptive Map Point Graphic\Descriptive Map Point Graphic.csproj", "{1D9D8C99-262E-4DBD-928E-F422DFE60C4B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D9D8C99-262E-4DBD-928E-F422DFE60C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9D8C99-262E-4DBD-928E-F422DFE60C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9D8C99-262E-4DBD-928E-F422DFE60C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9D8C99-262E-4DBD-928E-F422DFE60C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0AD49639-B417-45B2-9EBF-D9660EE6BD77}
+	EndGlobalSection
+EndGlobal
