@@ -25,6 +25,7 @@
           <!-- host controls within groups -->
           <button refID="Descriptive_Map_Point_Graphic_Dockpane1_ShowButton" size="large" />
           <button refID="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" size="large" />
+          <tool refID="Descriptive_Map_Point_Graphic_AddPointTool" size="large" />
         </group>
       </groups>
       <controls>
@@ -35,6 +36,9 @@
         <button id="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" caption="Show DescriptiveMapPointDockPane" className="DescriptiveMapPointDockPane_ShowButton" loadOnClick="true" smallImage="GenericButtonPurple16" largeImage="GenericButtonPurple32">
           <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
         </button>
+        <tool id="Descriptive_Map_Point_Graphic_AddPointTool" caption="AddPointTool" className="AddPointTool" loadOnClick="true" smallImage="GenericButtonRed16" largeImage="GenericButtonRed32" condition="esri_mapping_mapPane">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </tool>
       </controls>
       <dockPanes>
         <dockPane id="Descriptive_Map_Point_Graphic_Dockpane1" caption="Dockpane 1" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_projectDockPane">
