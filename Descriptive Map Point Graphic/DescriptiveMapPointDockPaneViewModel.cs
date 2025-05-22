@@ -5,27 +5,19 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ArcGIS.Core.CIM;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Core.Internal.Geometry;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace Descriptive_Map_Point_Graphic
 {
     public class DescriptiveMapPointDockPaneViewModel : DockPane
     {
-        public DescriptiveMapPointDockPaneViewModel()
-        {
-            _points = new ObservableCollection<DescriptivePoint>();
-
-            _points.Add(new DescriptivePoint
-            {
-                Description = "Test Point 1",
-                Location = MapPointBuilder.CreateMapPoint(30.05, 31.23)
-            });
-        }
         public const string _dockPaneID = "Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane";
 
         private string _descriptionText;
@@ -34,14 +26,16 @@ namespace Descriptive_Map_Point_Graphic
         private bool _isEditing;
         private DescriptivePoint _currentEditPoint;
         private RelayCommand _addPointCommand;
-       
+        private CIMSymbolReference _tempSymbol;
+        private Graphic _editGraphic;
+        private IDisposable _editOverlayGraphic;
+
         public string DescriptionText
         {
             get => _descriptionText;
             set
             {
                 SetProperty(ref _descriptionText, value);
-                
             }
         }
 
@@ -50,8 +44,6 @@ namespace Descriptive_Map_Point_Graphic
             get => _heading;
             set => SetProperty(ref _heading, value);
         }
-
-        //private ObservableCollection<DescriptivePoint> _points = new ObservableCollection<DescriptivePoint>();
 
         public ObservableCollection<DescriptivePoint> Points
         {
@@ -102,22 +94,61 @@ namespace Descriptive_Map_Point_Graphic
             _isEditing = true;
             _currentEditPoint = point;
             DescriptionText = point.Description;
+
+            QueuedTask.Run(() =>
+            {
+                MapView.Active?.Map?.SetSelection(null);
+                MapView.Active.ZoomTo(point.Location, TimeSpan.FromSeconds(1));
+
+                // امسح أي overlay قديم قبل إضافة جديد
+                _editOverlayGraphic?.Dispose();
+
+                var graphic = new CIMSymbolReference()
+                {
+                    Symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlueRGB, 10)
+                };
+                _editOverlayGraphic = MapView.Active.AddOverlay(point.Location, graphic);
+            });
         }
 
         public async Task AddOrUpdatePoint(MapPoint mapPoint)
         {
-            // Store these in temp variables to use inside the background thread
             string description = DescriptionText;
             bool isEdit = _isEditing;
             var editPoint = _currentEditPoint;
 
-            // Do the map-related or heavy logic inside QueuedTask
             await QueuedTask.Run(() =>
             {
                 if (isEdit && editPoint != null)
                 {
+                    // نافذة التأكيد على الـ UI thread
+                    bool? confirm = null;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var result = MessageBox.Show("Do you want to save the changes to this point?",
+                                                     "Confirm Edit",
+                                                     MessageBoxButton.YesNo,
+                                                     MessageBoxImage.Question);
+                        confirm = result == MessageBoxResult.Yes;
+                    });
+
+                    if (confirm != true)
+                    {
+                        // المستخدم لغى الحفظ
+                        return;
+                    }
+
+                    // تحديث البيانات
                     editPoint.Description = description;
                     editPoint.Location = mapPoint;
+
+                    // امسح overlay القديم وأضف الجديد بالموقع الجديد
+                    _editOverlayGraphic?.Dispose();
+                    var graphic = new CIMSymbolReference()
+                    {
+                        Symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlueRGB, 10)
+                    };
+                    _editOverlayGraphic = MapView.Active.AddOverlay(mapPoint, graphic);
                 }
                 else
                 {
@@ -127,8 +158,6 @@ namespace Descriptive_Map_Point_Graphic
                         Location = mapPoint
                     };
 
-                    // Set EditCommand outside QueuedTask to avoid threading issues
-                    // But we temporarily store it here
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         newPoint.EditCommand = new RelayCommand(() => OnEditPoint(newPoint));
@@ -139,16 +168,15 @@ namespace Descriptive_Map_Point_Graphic
                 }
             });
 
-            // Reset fields on UI thread
             Application.Current.Dispatcher.Invoke(() =>
             {
                 DescriptionText = string.Empty;
                 _isEditing = false;
                 _currentEditPoint = null;
-                
                 NotifyPropertyChanged(nameof(Points));
             });
         }
+
         internal static void Show()
         {
             DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
