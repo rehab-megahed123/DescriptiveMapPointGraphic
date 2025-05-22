@@ -14,9 +14,9 @@
     <insertModule id="Descriptive_Map_Point_Graphic_Module" className="Module1" autoLoad="false" caption="Module1">
       <!-- uncomment to have the control hosted on a separate tab-->
       <tabs>
-        <!--<tab id="Descriptive_Map_Point_Graphic_Tab1" caption="New Tab">
-          <group refID="Descriptive_Map_Point_Graphic_Group1"/>
-        </tab>-->
+        <tab id="Descriptive_Map_Point_Graphic_Tab1" caption="New Tab">
+          <group refID="Descriptive_Map_Point_Graphic_Group1" />
+        </tab>
       </tabs>
       <groups>
         <!-- comment this out if you have no controls on the Addin tab to avoid
@@ -26,6 +26,7 @@
           <button refID="Descriptive_Map_Point_Graphic_Dockpane1_ShowButton" size="large" />
           <button refID="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" size="large" />
           <tool refID="Descriptive_Map_Point_Graphic_AddPointTool" size="large" />
+          <button refID="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" size="large" />
         </group>
       </groups>
       <controls>
@@ -36,9 +37,12 @@
         <button id="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" caption="Show DescriptiveMapPointDockPane" className="DescriptiveMapPointDockPane_ShowButton" loadOnClick="true" smallImage="GenericButtonPurple16" largeImage="GenericButtonPurple32">
           <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
         </button>
-        <tool id="Descriptive_Map_Point_Graphic_AddPointTool" caption="AddPointTool" className="AddPointTool" loadOnClick="true" smallImage="GenericButtonRed16" largeImage="GenericButtonRed32" >
+        <tool id="Descriptive_Map_Point_Graphic_AddPointTool" caption="AddPointTool" className="AddPointTool" loadOnClick="true" smallImage="GenericButtonRed16" largeImage="GenericButtonRed32">
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </tool>
+        <button id="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" caption="DescriptiveMapPointDockPane _ShowButton" className="DescriptiveMapPointDockPane_ShowButton" loadOnClick="true" smallImage="GenericButtonBlue16" largeImage="GenericButtonBlue32">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </button>
       </controls>
       <dockPanes>
         <dockPane id="Descriptive_Map_Point_Graphic_Dockpane1" caption="Dockpane 1" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_projectDockPane">

@@ -25,7 +25,7 @@ namespace Descriptive_Map_Point_Graphic
         public DescriptiveMapPointDockPaneView()
         {
             InitializeComponent();
-            DataContext = new DescriptiveMapPointDockPaneViewModel();
+            
         }
     }
 }
