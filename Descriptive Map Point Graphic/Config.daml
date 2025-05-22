@@ -3,7 +3,7 @@
     <Name>Descriptive_Map_Point_Graphic</Name>
     <Description>Descriptive_Map_Point_Graphic description</Description>
     <Image>Images\AddinDesktop32.png</Image>
-    <Author>Rehab Megahed</Author>
+    <Author>Admin</Author>
     <Company>KhatipAndAlami</Company>
     <Date>5/21/2025 9:10:53 PM</Date>
     <Subject>Framework</Subject>
@@ -36,7 +36,7 @@
         <button id="Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane_ShowButton" caption="Show DescriptiveMapPointDockPane" className="DescriptiveMapPointDockPane_ShowButton" loadOnClick="true" smallImage="GenericButtonPurple16" largeImage="GenericButtonPurple32">
           <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
         </button>
-        <tool id="Descriptive_Map_Point_Graphic_AddPointTool" caption="AddPointTool" className="AddPointTool" loadOnClick="true" smallImage="GenericButtonRed16" largeImage="GenericButtonRed32" condition="esri_mapping_mapPane">
+        <tool id="Descriptive_Map_Point_Graphic_AddPointTool" caption="AddPointTool" className="AddPointTool" loadOnClick="true" smallImage="GenericButtonRed16" largeImage="GenericButtonRed32" >
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </tool>
       </controls>

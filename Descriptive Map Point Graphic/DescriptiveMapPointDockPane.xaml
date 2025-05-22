@@ -8,50 +8,75 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{Binding Path=ui.DescriptiveMapPointDockPaneViewModel}">
-  <UserControl.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </UserControl.Resources>
+    <UserControl.DataContext>
+        <ui:DescriptiveMapPointDockPaneViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- درجات ألوان Move -->
+            <Color x:Key="MoveLightColor">#D0E8FF</Color>
+            <Color x:Key="MoveMediumColor">#4A90E2</Color>
+            <Color x:Key="MoveDarkColor">#0F5BB5</Color>
+            <Color x:Key="MoveAccentColor">#7AB8FF</Color>
+
+            <SolidColorBrush x:Key="MoveLightBrush" Color="{StaticResource MoveLightColor}"/>
+            <SolidColorBrush x:Key="MoveMediumBrush" Color="{StaticResource MoveMediumColor}"/>
+            <SolidColorBrush x:Key="MoveDarkBrush" Color="{StaticResource MoveDarkColor}"/>
+            <SolidColorBrush x:Key="MoveAccentBrush" Color="{StaticResource MoveAccentColor}"/>
+
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="#2C3E50"/>
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="#7F8C8D"/>
+            <SolidColorBrush x:Key="SeparatorBrush" Color="#BDC3C7"/>
+            <SolidColorBrush x:Key="BackgroundLightBrush" Color="#F9F9F9"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="5">
-            <TextBlock Text="Point Description:" Margin="0,0,0,5"/>
-            <TextBox x:Name="DescriptionTextBox" Text="{Binding DescriptionText, UpdateSourceTrigger=PropertyChanged}" 
-                     Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            <TextBlock Text="Point Description:" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
+            <TextBox Text="{Binding DescriptionText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     Height="60" TextWrapping="Wrap" AcceptsReturn="True" 
+                     VerticalScrollBarVisibility="Auto" Margin="0,5,0,0" 
+                     BorderBrush="{StaticResource MoveMediumBrush}" Background="{StaticResource MoveLightBrush}" Foreground="{StaticResource TextPrimaryBrush}"/>
         </StackPanel>
 
         <Button Grid.Row="1" Content="Add Point" Command="{Binding AddPointCommand}" 
-                Margin="5" Height="30" Background="#FF0078D7" Foreground="White"/>
+                Margin="5" Height="30" Background="{StaticResource MoveMediumBrush}" Foreground="White"
+                FontWeight="Bold" />
 
-        <ListView Grid.Row="2" ItemsSource="{Binding Points}" Margin="5" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemTemplate>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Points}" Margin="5"
+                 BorderThickness="1" BorderBrush="{StaticResource SeparatorBrush}" Background="{StaticResource BackgroundLightBrush}">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="0,5" Padding="5" CornerRadius="3">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Grid.Column="0"/>
-
-                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <Button Content="Edit" Command="{Binding DataContext.EditPointCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                        CommandParameter="{Binding}" Margin="5,0,0,0" Width="50"/>
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                            <StackPanel Width="200">
+                                <TextBlock Text="{Binding Description}" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="{Binding LocationText}" FontStyle="Italic" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12"/>
                             </StackPanel>
-                        </Grid>
-                    </Border>
+                            <Button Content="Edit" Command="{Binding EditCommand}" 
+                                    Width="50" Height="25" Margin="10,0,0,0"
+                                    Background="{StaticResource MoveDarkBrush}" Foreground="White" FontWeight="SemiBold"
+                                    VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Separator Margin="0,8,0,0" Background="{StaticResource SeparatorBrush}" Height="1"/>
+                    </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Grid.Row="3" Content="Show Count" Command="{Binding ShowCountCommand}" Margin="5"
+                Background="#95A5A6" Foreground="White" Height="30" FontWeight="Bold"/>
     </Grid>
 </UserControl>
