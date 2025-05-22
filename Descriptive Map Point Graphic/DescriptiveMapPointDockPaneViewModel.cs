@@ -12,14 +12,16 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+using Descriptive_Map_Point_Graphic.Models;
+using Descriptive_Map_Point_Graphic.ViewModels.Abstraction;
 using DocumentFormat.OpenXml.Drawing;
 
 namespace Descriptive_Map_Point_Graphic
 {
-    public class DescriptiveMapPointDockPaneViewModel : DockPane
+    public class DescriptiveMapPointDockPaneViewModel : DockPane, IDescriptiveMapPointDockPaneViewModel
     {
+        #region Fields
         public const string _dockPaneID = "Descriptive_Map_Point_Graphic_DescriptiveMapPointDockPane";
-
         private string _descriptionText;
         private string _heading = "Descriptive Points";
         private ObservableCollection<DescriptivePoint> _points = new ObservableCollection<DescriptivePoint>();
@@ -29,7 +31,8 @@ namespace Descriptive_Map_Point_Graphic
         private CIMSymbolReference _tempSymbol;
         private Graphic _editGraphic;
         private IDisposable _editOverlayGraphic;
-
+        #endregion
+        #region Properities
         public string DescriptionText
         {
             get => _descriptionText;
@@ -50,7 +53,8 @@ namespace Descriptive_Map_Point_Graphic
             get => _points;
             set => SetProperty(ref _points, value);
         }
-
+        #endregion
+        #region Commands
         public ICommand AddPointCommand => _addPointCommand ?? (_addPointCommand = new RelayCommand(OnAddPoint, CanExecuteAddPoint));
         public ICommand EditPointCommand => new RelayCommand(() => OnEditPoint(_currentEditPoint), () => _currentEditPoint != null);
         public ICommand ShowCountCommand => new RelayCommand(() =>
@@ -62,7 +66,8 @@ namespace Descriptive_Map_Point_Graphic
         {
             return !string.IsNullOrWhiteSpace(DescriptionText);
         }
-
+        #endregion
+        #region Command Methods
         private async void OnAddPoint()
         {
             try
@@ -100,7 +105,7 @@ namespace Descriptive_Map_Point_Graphic
                 MapView.Active?.Map?.SetSelection(null);
                 MapView.Active.ZoomTo(point.Location, TimeSpan.FromSeconds(1));
 
-                // امسح أي overlay قديم قبل إضافة جديد
+                
                 _editOverlayGraphic?.Dispose();
 
                 var graphic = new CIMSymbolReference()
@@ -121,7 +126,7 @@ namespace Descriptive_Map_Point_Graphic
             {
                 if (isEdit && editPoint != null)
                 {
-                    // نافذة التأكيد على الـ UI thread
+                    
                     bool? confirm = null;
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -134,30 +139,35 @@ namespace Descriptive_Map_Point_Graphic
 
                     if (confirm != true)
                     {
-                        // المستخدم لغى الحفظ
+                        _editOverlayGraphic?.Dispose();
+                        
                         return;
                     }
 
-                    // تحديث البيانات
+                    
                     editPoint.Description = description;
                     editPoint.Location = mapPoint;
 
-                    // امسح overlay القديم وأضف الجديد بالموقع الجديد
+                    
                     _editOverlayGraphic?.Dispose();
                     var graphic = new CIMSymbolReference()
                     {
                         Symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlueRGB, 10)
                     };
                     _editOverlayGraphic = MapView.Active.AddOverlay(mapPoint, graphic);
+                    _editOverlayGraphic?.Dispose();
                 }
                 else
                 {
+                    
                     var newPoint = new DescriptivePoint
                     {
                         Description = description,
                         Location = mapPoint
                     };
 
+                    #endregion
+        # region UI Dispatcher Helpers
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         newPoint.EditCommand = new RelayCommand(() => OnEditPoint(newPoint));
@@ -165,6 +175,7 @@ namespace Descriptive_Map_Point_Graphic
                         Points = _points;
                         NotifyPropertyChanged(nameof(Points));
                     });
+                    
                 }
             });
 
@@ -176,6 +187,7 @@ namespace Descriptive_Map_Point_Graphic
                 NotifyPropertyChanged(nameof(Points));
             });
         }
+        #endregion
 
         internal static void Show()
         {

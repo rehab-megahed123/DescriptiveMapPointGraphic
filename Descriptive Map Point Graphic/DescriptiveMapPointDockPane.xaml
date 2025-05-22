@@ -7,7 +7,7 @@
              xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{Binding Path=ui.DescriptiveMapPointDockPaneViewModel}">
+             >
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -15,7 +15,7 @@
                 <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- درجات ألوان Move -->
+            
             <Color x:Key="MoveLightColor">#D0E8FF</Color>
             <Color x:Key="MoveMediumColor">#4A90E2</Color>
             <Color x:Key="MoveDarkColor">#0F5BB5</Color>

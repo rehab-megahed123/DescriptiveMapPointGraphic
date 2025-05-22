@@ -10,13 +10,15 @@ namespace Descriptive_Map_Point_Graphic
 
     internal class AddPointTool : MapTool
     {
+        #region Constructor
         public AddPointTool()
         {
             IsSketchTool = true;
             SketchType = SketchGeometryType.Point;
             SketchOutputMode = SketchOutputMode.Map;
         }
-
+        #endregion
+        #region Overrides - Tool Activation
         protected override Task OnToolActivateAsync(bool active)
         {
             return base.OnToolActivateAsync(active);
@@ -44,5 +46,7 @@ namespace Descriptive_Map_Point_Graphic
             }
             return true;
         }
+        #endregion
     }
 }
+

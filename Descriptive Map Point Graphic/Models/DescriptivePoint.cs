@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ArcGIS.Core.Geometry;
 
-namespace Descriptive_Map_Point_Graphic
+namespace Descriptive_Map_Point_Graphic.Models
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
