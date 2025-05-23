@@ -8,7 +8,7 @@ A custom ArcGIS Pro Add-In that allows users to interactively add, describe, and
 
 - 🗺️ Add custom points on the map.
 - 📝 Provide descriptive text for each point.
-- ✏️ Edit point descriptions and locations.
+- ✏️ Edit point location.
 - 🧾 View and manage all points through a responsive Dockpane.
 - 🧾 View The Count Of Points Added.
 - 🔄 Real-time UI updates using MVVM pattern.
@@ -20,7 +20,7 @@ A custom ArcGIS Pro Add-In that allows users to interactively add, describe, and
 - 🗺️ Add custom points on the map With Description.
 ![img1](https://github.com/user-attachments/assets/b922a443-d76d-4bf9-aed6-ac4783e29a98)
 
-- ✏️ Edit point descriptions and locations (Confirm Editing Or Cancel It).
+- ✏️ Edit point location (Confirm Editing Or Cancel It).
   ![img2](https://github.com/user-attachments/assets/249a8b72-3ccf-4d56-9a47-2bf13f14aa36)
   
 - 🗺️ Add Multiple Points
